@@ -10,7 +10,7 @@ export default function Dashboard() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const user = JSON.parse(localStorage.getItem("user"));
-    notify(`Xoş gəldin ${user.first_name + " " + user.last_name}`);
+    // notify(`Xoş gəldin ${user.first_name + " " + user.last_name}`);
 
     if (token) {
       axios
