@@ -109,20 +109,6 @@ export default function AuthCard() {
 
   const login = e.target.closest(".login") !== null;
   const dataObj = login ? loginData : regData;
-
-  const formErrs = {};
-  Object.entries(dataObj).forEach(([k, v]) => {
-    const msg = validateField(k, v, login);
-    if (msg) formErrs[k] = msg;
-  });
-
-  if (Object.keys(formErrs).length) {
-    setErrors(formErrs);
-    setIsLoading(false); // Əgər validasiya səhvdirsə, loading dayansın
-    return;
-  }
-
-  setErrors({});
   const url = login ? "login" : "register";
 
   try {
@@ -134,7 +120,7 @@ export default function AuthCard() {
     console.log(login ? "Login uğurlu:" : "Qeydiyyat uğurlu:", response.data);
 
     if (login && response.data) {
-      notify(`Xoş gəldin ${response.data.user.first_name + ' ' + response.data.user.last_name}`);
+      // notify(`Xoş gəldin ${response.data.user.first_name + ' ' + response.data.user.last_name}`);
       console.log(`Xoş gəldin ${response.data.user.first_name + ' ' + response.data.user.last_name}`)
       console.log(response.data)
       localStorage.setItem('token',response.data.access)
