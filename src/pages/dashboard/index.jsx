@@ -7,28 +7,28 @@ export default function Dashboard() {
   const [username, setUsername] = useState("");
   const [toastVisible, setToastVisible] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const user = JSON.parse(localStorage.getItem("user"));
-    // notify(`Xoş gəldin ${user.first_name + " " + user.last_name}`);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   const user = JSON.parse(localStorage.getItem("user"));
+  //   // notify(`Xoş gəldin ${user.first_name + " " + user.last_name}`);
 
-    if (token) {
-      axios
-        .get("http://167.86.97.169/zahren/api/profile/", {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        })
-        .then((res) => {
-          const user = res.data;
-          setUsername(user.username);
-          setToastVisible(true); // toasteri göstər
-        })
-        .catch((err) => {
-          console.error("İstifadəçi məlumatı alınmadı", err);
-        });
-    }
-  }, []);
+  //   if (token) {
+  //     axios
+  //       .get("http://167.86.97.169/zahren/api/profile/", {
+  //         headers: {
+  //           Authorization: `Token ${token}`,
+  //         },
+  //       })
+  //       .then((res) => {
+  //         const user = res.data;
+  //         setUsername(user.username);
+  //         setToastVisible(true); // toasteri göstər
+  //       })
+  //       .catch((err) => {
+  //         console.error("İstifadəçi məlumatı alınmadı", err);
+  //       });
+  //   }
+  // }, []);
 
   const notify = (value) => toast.success(value);
 
