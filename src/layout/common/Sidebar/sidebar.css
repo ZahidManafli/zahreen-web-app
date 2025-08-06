@@ -1,0 +1,88 @@
+
+
+body {
+    min-height: 100vh;
+    background-color: white;
+}
+
+.menu::-webkit-scrollbar {
+    display: none;
+}
+
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 85px;
+    height: 100%;
+    transition: .3s;
+    scrollbar-width: none;
+    overflow: hidden scroll;
+    background: white;
+    -ms-overflow-style: none;
+    padding: 0 10px 0 0;
+    backdrop-filter: blur(5px);
+    box-shadow: 8px 0px 9px 3px #00000014;
+}
+
+.menu:hover {
+    width: 260px;
+}
+
+.menu:hover li span:nth-child(2) {
+    display: block;
+}
+
+.menu-content li {
+    list-style: none; 
+    border-radius: 0px 50px 50px 0;
+    transition: .3s;
+    margin-bottom: 20px;
+    padding-left: 20px;
+}
+
+.menu-content li:hover {
+    background: #1a4862;
+}
+
+.menu-content li span:nth-child(2) {
+    display: none;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    font-family: 'calibri';
+}
+.menu-headers{
+    color:#1a4862;
+}
+.menu-headers:hover{
+    color: white;
+}
+.logo{
+    width: 90px;
+    height: 90px;
+    background-color: white ;
+    border-radius: 100%;
+    padding: 0px;
+
+}
+.material-symbols-outlined {
+    padding: 10px;
+    font-size: 25px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background: #1a4862;
+}
+.material-symbols-outlined:hover{
+    background-color: white;
+    color:#1a4862
+}
+
+.menu-content li:hover .material-symbols-outlined {
+  background: transparent;
+  color: white;           
+}
