@@ -42,7 +42,7 @@ body {
 }
 
 .menu-content li:hover {
-    background: #1a4862;
+    background: #1b7793;
 }
 
 .menu-content li span:nth-child(2) {
@@ -51,16 +51,13 @@ body {
 
 a {
     text-decoration: none;
-    color: white;
+    /* color: white; */
     display: flex;
     align-items: center;
     font-family: 'calibri';
 }
-.menu-headers{
-    color:#1a4862;
-}
-.menu-headers:hover{
-    color: white;
+.menu-item a .menu-headers{
+    color:#1b7793;
 }
 .logo{
     width: 90px;
@@ -75,14 +72,25 @@ a {
     font-size: 25px;
     margin-right: 10px;
     border-radius: 50%;
-    background: #1a4862;
-}
-.material-symbols-outlined:hover{
-    background-color: white;
-    color:#1a4862
+    background: #1b7793;
+    color: white;
 }
 
-.menu-content li:hover .material-symbols-outlined {
+.menu-item :hover{
+    background: #1b7793;
+    color: white;
+}
+
+.menu-item:hover a .material-symbols-outlined, .menu-item:hover a .menu-headers {
+    background: transparent !important;
+    color: white !important;           
+}
+
+
+
+
+
+/*.menu-content li:hover .material-symbols-outlined {
   background: transparent;
   color: white;           
-}
+} */

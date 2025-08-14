@@ -15,7 +15,7 @@ const MainLayout = () => {
   return (
     <div className="h-screen flex w-[100%] justify-between">
       {/* Navbar - Yuxarı hissə */}
-      <aside className="w-[1%] border-r p-4 overflow-y-auto sticky">
+      <aside className="w-[85px] border-r p-4 overflow-y-auto sticky">
         <SidebarMenu sendToParent={handleChildData} />
       </aside>
 
@@ -27,7 +27,7 @@ const MainLayout = () => {
         )}
       >
         {/* Sidebar */}
-        <div className="w-[100%] shadow z-10 absolute top-0">
+        <div className="z-10 w-[100%] pl-4 bg-gray-50">
           <Navbar />
         </div>
 

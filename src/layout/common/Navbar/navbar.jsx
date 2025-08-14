@@ -1,12 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const dropdownRef = useRef();
+  const navigate = useNavigate();
+  const [role, setRole] = useState(null);
 
   // Çöldən klik olunduqda dropdown bağlansın
   useEffect(() => {
+    const userStr = localStorage.getItem("user");
+    if (userStr) {
+      const user = JSON.parse(userStr);
+      setRole(user.role?.toLowerCase());
+    }
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownOpen(false);
@@ -16,13 +24,38 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleDropdownClick = (action) => {
+    setDropdownOpen(false);
+    switch (action) {
+      case "profile":
+        navigate("/profile");
+        break;
+      case "requests":
+        navigate("/my-requests");
+        break;
+      case "users":
+        navigate("/users");
+        break;
+      case "leaders":
+        navigate("/leaders-table");
+        break;
+      case "logout":
+        // Clear user and redirect to login
+        localStorage.clear();
+        navigate("/login");
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
-    <nav className="bg-white border-gray-200 dark:bg-white h-[80px]  ">
+    <nav className="w-[100%] shadow  bg-white border-gray-200 dark:bg-white h-[80px]  ">
       <div className=" flex flex-wrap items-center justify-between p-4">
         {/* Logo */}
         <a href="https://flowbite.com/" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <span className="self-center text-3xl font-semibold whitespace-nowrap dark:text-cyan-900">
-            Kursun adi 
+          <span className="self-center text-3xl font-semibold whitespace-nowrap text-cyan-600 dark:text-cyan-900">
+            Zahreenn
           </span>
         </a>
 
@@ -32,15 +65,11 @@ const Navbar = () => {
           <div className="relative" ref={dropdownRef}>
             <button
               type="button"
-              className="flex text-xl bg-cyan-800 rounded-full md:me-0 focus:ring-3 focus:ring-cyan-900 dark:focus:ring-cyan-900"
+              className="flex text-xl cursor-pointer bg-cyan-800 rounded-full md:me-0 focus:ring-3 focus:ring-cyan-900 dark:focus:ring-cyan-900 p-3"
               onClick={() => setDropdownOpen(!dropdownOpen)}
             >
               <span className="sr-only">Open user menu</span>
-              <img
-                className="w-12 h-12 rounded-full"
-                src="#"
-                alt="user photo"
-              />
+              <i className="fa-solid fa-user text-white"></i>
             </button>
 
             {/* Dropdown menyu */}
@@ -50,6 +79,7 @@ const Navbar = () => {
       <li>
         <a
           href="#"
+          onClick={() => handleDropdownClick("profile")}
           className="block px-4 py-2 text-[16px] text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-cyan-800 transition-colors duration-150"
         >
           Profil
@@ -58,14 +88,36 @@ const Navbar = () => {
       <li>
         <a
           href="#"
+          onClick={() => handleDropdownClick("requests")}
           className="block px-4 py-2 text-[16px] text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-cyan-800 transition-colors duration-150"
         >
-          Şifrəni yenilə
+          Sorğularım
+        </a>
+      </li>
+      { (role !== "parent" && role !== 'student') && (
+        <li>
+          <a
+            href="#"
+            onClick={() => handleDropdownClick("users")}
+            className="block px-4 py-2 text-[16px] text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-cyan-800 transition-colors duration-150"
+          >
+            İstifadəçilər
+          </a>
+        </li>
+      )}
+      <li>
+        <a
+          href="#"
+          onClick={() => handleDropdownClick("leaders")}
+          className="block px-4 py-2 text-[16px] text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-cyan-800 transition-colors duration-150"
+        >
+          Liderlər cədvəli
         </a>
       </li>
       <li>
         <a
           href="#"
+          onClick={() => handleDropdownClick("logout")}
           className="block px-4 py-2 text-[16px] text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-cyan-800 transition-colors duration-150"
         >
           Çıxış

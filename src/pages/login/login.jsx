@@ -103,13 +103,26 @@ export default function AuthCard() {
 
   const navigate = useNavigate();
 
- const handleSubmit = async (e) => {
+ // ...existing code...
+const handleSubmit = async (e) => {
   e.preventDefault();
-  setIsLoading(true);
 
   const login = e.target.closest(".login") !== null;
   const dataObj = login ? loginData : regData;
   const url = login ? "login" : "register";
+
+  // Validation for login fields
+  if (login && (!loginData.username || !loginData.password)) {
+    Swal.fire({
+      icon: "error",
+      title: "Xəta",
+      text: "Zəhmət olmasa bütün xanaları doldurun.",
+      confirmButtonText: "Bağla",
+    });
+    return;
+  }
+
+  setIsLoading(true);
 
   try {
     const response = await axios.post(
@@ -117,19 +130,20 @@ export default function AuthCard() {
       dataObj
     );
 
-    console.log(login ? "Login uğurlu:" : "Qeydiyyat uğurlu:", response.data);
-
     if (login && response.data) {
-      // notify(`Xoş gəldin ${response.data.user.first_name + ' ' + response.data.user.last_name}`);
-      console.log(`Xoş gəldin ${response.data.user.first_name + ' ' + response.data.user.last_name}`)
-      console.log(response.data)
-      localStorage.setItem('token',response.data.access)
-      localStorage.setItem('user',JSON.stringify(response.data.user))
-      if (!response.data.user.role) {
-    navigate("/requests"); // Rolu yoxdursa sorğular səhifəsinə yönləndir
-  } else {
-    navigate("/"); // Rolu varsa əsas səhifəyə
-  }
+      let { access, refresh, user } = response.data;
+
+      // Ensure role exists — otherwise default to 'guest'
+      if (!user.role || user.role === "") {
+        user.role = "guest";
+      }
+
+      // Save tokens and user info separately
+      localStorage.setItem("token", access);
+      localStorage.setItem("refresh", refresh);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      navigate(`${user.role == 'guest' ? '/send-request' : '/'}`, { state: { name: user.first_name } });
     } else {
       Swal.fire({
         icon: "success",
@@ -146,33 +160,24 @@ export default function AuthCard() {
       });
     }
   } catch (error) {
-  console.error("Xətası:", error);
-  const errData = error?.response?.data;
+    const errData = error?.response?.data;
+    let errorMessage =
+      errData?.detail ||
+      (errData?.email && Array.isArray(errData.email)
+        ? "Bu e-mail ilə qeydiyyat artıq mövcuddur."
+        : "Giriş uğursuz oldu. Yenidən cəhd edin.");
 
-  // Default error mesajı
-  let errorMessage = "Naməlum xəta baş verdi";
-
-  // Əgər email üçün spesifik xəta varsa
-  if (errData?.email && Array.isArray(errData.email)) {
-    errorMessage = "Bu e-mail ilə qeydiyyat artıq mövcuddur."; // Məsələn: "Bu e-poçt ilə qeydiyyat artıq mövcuddur."
-  }
-
-  // Əgər ümumi detail varsa (login zamanı ola bilər)
-  else if (errData?.detail) {
-    errorMessage = errData.detail;
-  }
-
-  Swal.fire({
-    icon: "error",
-    title: "Xəta baş verdi",
-    text: errorMessage,
-    confirmButtonText: "Bağla",
-  });
-}
- finally {
+    Swal.fire({
+      icon: "error",
+      title: "Xəta baş verdi",
+      text: errorMessage,
+      confirmButtonText: "Bağla",
+    });
+  } finally {
     setIsLoading(false);
   }
 };
+// ...existing code...
 
 
   const Field = ({ name, children }) => (
