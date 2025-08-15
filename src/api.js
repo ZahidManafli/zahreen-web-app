@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://167.86.97.169/zahren/api/",
+  baseURL: "http://www.apizahreenn.duckdns.org/zahren/api/",
 });
 
 // Log each request
