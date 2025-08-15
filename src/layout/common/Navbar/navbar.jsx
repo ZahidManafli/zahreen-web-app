@@ -60,7 +60,7 @@ const Navbar = ({ onMenuClick }) => {
           </button>
 
           <a href="#" className="flex items-center space-x-3">
-            <span className="text-3xl font-semibold text-cyan-600">Zahreenn</span>
+            <span className="text-3xl font-semibold text-cyan-600 baskervville-400 edu-nsw-act-cursive-400">Zahreenn</span>
           </a>
         </div>
 

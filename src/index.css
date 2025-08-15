@@ -1,5 +1,28 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700;1,400..700&family=Edu+NSW+ACT+Cursive:wght@400..700&display=swap');
 @import "tailwindcss";
+
+
+.baskervville-400 {
+  font-family: "Baskervville", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.baskervville-700 {
+  font-family: "Baskervville", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.edu-nsw-act-cursive-400 {
+  font-family: "Edu NSW ACT Cursive", cursive;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
