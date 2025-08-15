@@ -7,6 +7,7 @@ import clsx from 'clsx';
 
 const MainLayout = () => {
   const [flag, setFlag] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false); // For mobile toggle
 
   const handleChildData = (data) => {
     setFlag(data);
@@ -15,25 +16,42 @@ const MainLayout = () => {
   return (
     <div className="h-screen flex w-[100%] justify-between">
       {/* Navbar - Yuxarı hissə */}
-      <aside className="w-[85px] border-r p-4 overflow-y-auto sticky">
+      <aside className="hidden md:block w-[85px] border-r p-4 overflow-y-auto sticky">
         <SidebarMenu sendToParent={handleChildData} />
       </aside>
 
-      {/* Main bölmə: Sidebar və Content */}
+      {/* Mobile Sidebar (slide-in) */}
+      {mobileSidebarOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-black bg-opacity-50 md:hidden"
+          onClick={() => setMobileSidebarOpen(false)}
+        >
+          <div
+            className="fixed top-0 left-0 w-[100%] h-full bg-white shadow-lg"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <SidebarMenu
+              sendToParent={handleChildData}
+              onClose={() => setMobileSidebarOpen(false)}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Main Content */}
       <div
         className={clsx(
-          "flex flex-col justify-end h-[100%] relative transition-all overflow-hidden",
-          flag ? "w-[83%]" : "w-[95%]"
+          "flex flex-col h-full relative transition-all overflow-hidden w-full",
+          flag && "md:w-[calc(100%-260px)]"
         )}
       >
-        {/* Sidebar */}
-        <div className="z-10 w-[100%] pl-4 bg-gray-50">
-          <Navbar />
+        {/* Navbar */}
+        <div className="z-10 w-[100%] bg-gray-50">
+          <Navbar onMenuClick={() => setMobileSidebarOpen(true)} />
         </div>
 
         {/* Content */}
-        <main className="w-[100%] h-[90%] overflow-y-auto p-4 bg-gray-50">
-
+        <main className="flex-1 overflow-y-auto p-4 bg-gray-50">
           <Outlet />
         </main>
       </div>

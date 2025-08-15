@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./sidebar.css";
 import ZRlogo from "../../../assets/zahreenn.png";
 import { useNavigate } from "react-router-dom";
-export default function SidebarMenu({ sendToParent }) {
 
+export default function SidebarMenu({ sendToParent, onClose }) {
   const [role, setRole] = useState(null);
-
   const navigate = useNavigate();
+
   const sendData = (value) => {
-    sendToParent(value);
+    if (sendToParent) sendToParent(value);
   };
 
   useEffect(() => {
@@ -35,6 +35,7 @@ export default function SidebarMenu({ sendToParent }) {
 
   const handleMenuClick = (path) => {
     navigate(path);
+    if (onClose) onClose(); // Close sidebar if mobile
   };
 
   return (

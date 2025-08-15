@@ -94,3 +94,18 @@ a {
   background: transparent;
   color: white;           
 } */
+
+
+@media (max-width: 768px) {
+    .menu {
+        position: relative;
+        width: 100%;
+    }
+
+    .menu:hover{
+        width: 100%;
+    }
+    .menu-content li span:nth-child(2) {
+        display: block;
+    }
+}
